@@ -1,0 +1,84 @@
+model:
+  variant: B
+  version: 11
+  residual_scale: 0.1
+  context_size: 12
+  patch_chunk_size: 1024
+  active_patch_encoding: true
+payload_bits: 2008
+data:
+  image_size: 1024
+  input_range:
+  - 0.0
+  - 1.0
+training:
+  seed: 1
+  micro_batch_size: 8
+  gradient_accumulation_steps: 2
+  workers: 0
+  precision: fp32
+  alpha_ssim: 0.1
+  optimizer: adam
+  betas:
+  - 0.9
+  - 0.999
+  eps: 1.0e-08
+  weight_decay: 0.0
+  stage_epochs:
+  - 10
+  - 20
+  - 520
+  learning_rates:
+  - 0.0001
+  - 0.0003
+  - 0.0003
+  alpha_q:
+  - 0.5
+  - 20.0
+  - 40.0
+  alpha_r:
+  - 1.5
+  - 1.0
+  - 1.0
+  checkpoint_epoch: 225
+evaluation:
+  batch_size: 1
+  payload_seed: 20260805
+  seeds:
+  - 11
+  - 22
+  - 33
+  - 44
+  - 55
+  threshold: 0.5
+  restore_invariant_patterns: true
+  payload_bits:
+  - 1024
+  - 2008
+attacks:
+  jpeg_quality: 30
+  jpeg_subsampling: '4:2:0'
+  brightness_min: 0.75
+  brightness_max: 1.25
+  contrast_min: 0.75
+  contrast_max: 1.25
+  saturation_min: 0.75
+  saturation_max: 1.25
+  gaussian_blur_kernel: 5
+  gaussian_blur_sigma_min: 0.1
+  gaussian_blur_sigma_max: 1.5
+  gaussian_noise_std: 0.04
+  posterize_bits: 4
+  color_jiggle_brightness: 0.15
+  color_jiggle_contrast: 0.15
+  color_jiggle_saturation: 0.15
+  color_jiggle_hue: 0.02
+  rgb_shift_min: -0.05
+  rgb_shift_max: 0.05
+  horizontal_flip_probability: 1.0
+  rotation_min_degrees: -5.0
+  rotation_max_degrees: 5.0
+  random_erasing_scale_min: 0.02
+  random_erasing_scale_max: 0.05
+  random_erasing_ratio_min: 0.5
+  random_erasing_ratio_max: 1.5
